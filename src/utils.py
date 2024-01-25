@@ -14,7 +14,7 @@ def read_operations():
     with open(file_path, 'r', encoding='utf-8') as file:
         operations = json.load(file)
         executed_operations = []
-        needed_keys = ['date', 'from', 'to']
+        needed_keys = ['date']
         for operation in operations:
             if all([key in operation.keys() for key in needed_keys]) and operation['state'] == 'EXECUTED':
                 executed_operations.append(operation)
@@ -41,5 +41,8 @@ def print_five_last_operations():
         date_f = operation_date.strftime('%d.%m.%Y')
         amount = operation['operationAmount']
         print(f"{date_f} {operation['description']}")
-        print(f"{formating_func(operation['from'])} -> {formating_func(operation['to'])}")
+        if 'from' in operation.keys():
+            print(f"{formating_func(operation['from'])} -> {formating_func(operation['to'])}")
+        else:
+            print(f"-> {formating_func(operation['to'])}")
         print(f"{amount['amount']} {amount['currency']['name']}\n")
