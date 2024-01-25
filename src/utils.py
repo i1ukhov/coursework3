@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 
 
@@ -9,7 +10,8 @@ def sorting_function(x):
 
 def read_operations():
     """Функция считывает операции в файле operations.json, фильтрует и сортирует, возвращая список"""
-    with open('../operations.json', 'r', encoding='utf-8') as file:
+    file_path = os.path.join("..", "operations.json")
+    with open(file_path, 'r', encoding='utf-8') as file:
         operations = json.load(file)
         executed_operations = []
         needed_keys = ['date', 'from', 'to']
@@ -27,7 +29,7 @@ def formating_func(transaction):
     op_type = information[-1]
     if information[0] == 'Счет':
         return f"{name} **{op_type[-4:]}"
-    return f"{name} {op_type[:4]} {op_type[4:6]}** {'*' * 4} {op_type[-4:]} "
+    return f"{name} {op_type[:4]} {op_type[4:6]}** {'*' * 4} {op_type[-4:]}"
 
 
 def print_five_last_operations():
